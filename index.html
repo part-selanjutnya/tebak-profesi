@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Profesi Masa Depan</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f0f2f5; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .header-input {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+        input[type="text"] { 
+            flex-grow: 1;
+            padding: 12px; 
+            font-size: 16px; 
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            outline: none;
+            text-transform: uppercase;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:active { background-color: #003d82; }
+        
+        .tabel-container { padding: 10px; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        th, td { 
+            border-bottom: 1px solid #ddd; 
+            padding: 12px 8px; 
+            text-align: center; 
+            font-size: 14px;
+        }
+        th { background-color: #0056b3; color: white; }
+        img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin-bottom: 5px;}
+        .nama-user { font-size: 16px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="header-input">
+    <input type="text" id="inputNama" placeholder="KETIK NAMA..." autocomplete="off">
+    <button id="btnTebak">Cek</button>
+</div>
+
+<div class="tabel-container">
+    <table id="tabelHasil">
+        <tr>
+            <th style="width: 40%;">NAMA</th>
+            <th style="width: 60%;">CITA-CITA</th>
+        </tr>
+        <!-- Baris hasil akan ditambahkan di sini oleh JavaScript -->
+    </table>
+</div>
+
+<script>
+    // Database Profesi dengan Gambar dari Google Drive
+    const daftarProfesi = [
+        { 
+            nama: "Profesi 1", // Ganti dengan nama yang sesuai gambarnya
+            gambar: "https://drive.google.com/uc?export=view&id=1_wCRzblylnIYHGy4VhH7DPDpTTMrDS2K" 
+        },
+        { 
+            nama: "Profesi 2", // Ganti dengan nama yang sesuai gambarnya
+            gambar: "https://drive.google.com/uc?export=view&id=1a1hTh5xBLM_mY5qd1vWTTFhSuBYryI6j" 
+        },
+        { 
+            nama: "Profesi 3", // Ganti dengan nama yang sesuai gambarnya
+            gambar: "https://drive.google.com/uc?export=view&id=1WJBrGKyL7KJdeL8RKzShj3uEK6IIq2FR" 
+        },
+        { 
+            nama: "Profesi 4", // Ganti dengan nama yang sesuai gambarnya
+            gambar: "https://drive.google.com/uc?export=view&id=1XGWduSvgzzuEO6YkqpvUcvEnrDucxuT9" 
+        },
+        { 
+            nama: "Profesi 5", // Ganti dengan nama yang sesuai gambarnya
+            gambar: "https://drive.google.com/uc?export=view&id=1G1jwYRkvxGEL9kHMvu0aj0fMD0bnCOaM" 
+        },
+        { 
+            nama: "Profesi 6", // Ganti dengan nama yang sesuai gambarnya
+            gambar: "https://drive.google.com/uc?export=view&id=12as9lE0GjpQrUpp9UNlI618ouJ66pNUP" 
+        }
+    ];
+
+    const inputNama = document.getElementById('inputNama');
+    const btnTebak = document.getElementById('btnTebak');
+    const tabelHasil = document.getElementById('tabelHasil');
+
+    function jalankanSistem() {
+        const namaUser = inputNama.value.trim();
+        if (namaUser !== "") {
+            const indeksAcak = Math.floor(Math.random() * daftarProfesi.length);
+            const profesiTerpilih = daftarProfesi[indeksAcak];
+
+            // Tambahkan baris di bawah header
+            const barisBaru = tabelHasil.insertRow(1);
+            const selNama = barisBaru.insertCell(0);
+            const selCitaCita = barisBaru.insertCell(1);
+
+            selNama.innerHTML = `<div class="nama-user">${namaUser.toUpperCase()}</div>`;
+            selCitaCita.innerHTML = `
+                <img src="${profesiTerpilih.gambar}" alt="${profesiTerpilih.nama}"><br>
+                <strong>${profesiTerpilih.nama.toUpperCase()}</strong>
+            `;
+
+            inputNama.value = "";
+            inputNama.blur(); // Menutup keyboard HP otomatis
+        }
+    }
+
+    btnTebak.addEventListener('click', jalankanSistem);
+
+    inputNama.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            jalankanSistem();
+        }
+    });
+</script>
+
+</body>
+</html>
